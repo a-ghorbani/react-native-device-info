@@ -614,6 +614,7 @@ RCT_EXPORT_METHOD(getTotalDiskCapacity:(RCTPromiseResolveBlock)resolve rejecter:
 
         NSNumber *availableCapacityForImportantUsage = [storageValues objectForKey:NSURLVolumeAvailableCapacityForImportantUsageKey];
         if (availableCapacityForImportantUsage) {
+            NSLog(@"Available disk space for important usage: %@", availableCapacityForImportantUsage);
             return (double)[availableCapacityForImportantUsage unsignedLongLongValue];
         }
     } else {

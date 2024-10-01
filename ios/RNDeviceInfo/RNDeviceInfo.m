@@ -607,8 +607,6 @@ RCT_EXPORT_METHOD(getTotalDiskCapacity:(RCTPromiseResolveBlock)resolve rejecter:
         NSURL *fileURL = [NSURL fileURLWithPath:NSHomeDirectory()];
         NSDictionary *storageValues = [fileURL resourceValuesForKeys:@[NSURLVolumeAvailableCapacityForImportantUsageKey] error:&error];
 
-        printf("iOS 11 and above\n");
-
         if (error) {
             NSLog(@"Error retrieving storage information: %@", error);
             return 0;
@@ -616,11 +614,9 @@ RCT_EXPORT_METHOD(getTotalDiskCapacity:(RCTPromiseResolveBlock)resolve rejecter:
 
         NSNumber *availableCapacityForImportantUsage = [storageValues objectForKey:NSURLVolumeAvailableCapacityForImportantUsageKey];
         if (availableCapacityForImportantUsage) {
-            NSLog(@"Available disk space for important usage: %@", availableCapacityForImportantUsage);
             return (double)[availableCapacityForImportantUsage unsignedLongLongValue];
         }
     } else {
-        printf("iOS < 11\n");
         // Fallback for older iOS versions: Use NSFileSystemFreeSize
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error:&error];
